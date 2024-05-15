@@ -1,12 +1,16 @@
-#include "ConnectionPainter.hpp"
+#include "DefaultConnectionPainter.hpp"
 
-#include <QtGui/QIcon>
+#include <cmath>
+
+#include <QtCore/QMargins>
 
 #include "AbstractGraphModel.hpp"
+#include "AbstractNodeGeometry.hpp"
+#include "BasicGraphicsScene.hpp"
 #include "ConnectionGraphicsObject.hpp"
-#include "ConnectionState.hpp"
-#include "Definitions.hpp"
-#include "NodeData.hpp"
+#include "ConnectionIdUtils.hpp"
+#include "NodeGraphicsObject.hpp"
+#include "NodeState.hpp"
 #include "StyleCollection.hpp"
 
 namespace QtNodes {
@@ -23,28 +27,12 @@ static QPainterPath cubicPath(ConnectionGraphicsObject const &connection)
 
     cubic.cubicTo(c1c2.first, c1c2.second, in);
 
+    
+
     return cubic;
 }
 
-QPainterPath ConnectionPainter::getPainterStroke(ConnectionGraphicsObject const &connection)
-{
-    auto cubic = cubicPath(connection);
 
-    QPointF const &out = connection.endPoint(PortType::Out);
-    QPainterPath result(out);
-
-    unsigned segments = 20;
-
-    for (auto i = 0ul; i < segments; ++i) {
-        double ratio = double(i + 1) / segments;
-        result.lineTo(cubic.pointAtPercent(ratio));
-    }
-
-    QPainterPathStroker stroker;
-    stroker.setWidth(10.0);
-
-    return stroker.createStroke(result);
-}
 
 #ifdef NODE_DEBUG_DRAWING
 static void debugDrawing(QPainter *painter, ConnectionGraphicsObject const &cgo)
@@ -94,6 +82,7 @@ static void drawSketchLine(QPainter *painter, ConnectionGraphicsObject const &cg
         painter->setBrush(Qt::NoBrush);
 
         auto cubic = cubicPath(cgo);
+       
 
         // cubic spline
         painter->drawPath(cubic);
@@ -227,8 +216,8 @@ static void drawNormalLine(QPainter *painter, ConnectionGraphicsObject const &cg
     }
 }
 
-void ConnectionPainter::paint(QPainter *painter, ConnectionGraphicsObject const &cgo)
-{
+
+void DefaultConnectionPainter::paint(QPainter *painter, ConnectionGraphicsObject &cgo) const {
     drawHoveredOrSelected(painter, cgo);
 
     drawSketchLine(painter, cgo);
@@ -251,4 +240,25 @@ void ConnectionPainter::paint(QPainter *painter, ConnectionGraphicsObject const 
     painter->drawEllipse(cgo.in(), pointRadius, pointRadius);
 }
 
+
+QPainterPath DefaultConnectionPainter::getPainterStroke(ConnectionGraphicsObject const &connection)
+{
+    auto cubic = cubicPath(connection);
+
+    QPointF const &out = connection.endPoint(PortType::Out);
+    QPainterPath result(out);
+
+    unsigned segments = 20;
+
+    for (auto i = 0ul; i < segments; ++i) {
+        double ratio = double(i + 1) / segments;
+        result.lineTo(cubic.pointAtPercent(ratio));
+    }
+
+    QPainterPathStroker stroker;
+    stroker.setWidth(10.0);
+
+    return stroker.createStroke(result);
+}
+    
 } // namespace QtNodes

@@ -75,7 +75,7 @@ set(CPP_SOURCE_FILES
   src/AbstractNodeGeometry.cpp
   src/BasicGraphicsScene.cpp
   src/ConnectionGraphicsObject.cpp
-  src/ConnectionPainter.cpp
+  
   src/ConnectionState.cpp
   src/ConnectionStyle.cpp
   src/DataFlowGraphModel.cpp
@@ -95,7 +95,7 @@ set(CPP_SOURCE_FILES
   src/StyleCollection.cpp
   src/UndoCommands.cpp
   src/locateNode.cpp
-)
+ src/DefaultConnectionPainter.cpp)
 
 set(HPP_HEADER_FILES
   include/QtNodes/internal/AbstractGraphModel.hpp
@@ -128,12 +128,14 @@ set(HPP_HEADER_FILES
   include/QtNodes/internal/Serializable.hpp
   include/QtNodes/internal/Style.hpp
   include/QtNodes/internal/StyleCollection.hpp
-  src/ConnectionPainter.hpp
+  
   src/DefaultHorizontalNodeGeometry.hpp
   src/DefaultVerticalNodeGeometry.hpp
   src/NodeConnectionInteraction.hpp
   src/UndoCommands.hpp
-)
+ include/QtNodes/internal/AbstractConnectionPainter.hpp 
+ include/QtNodes/internal/DefaultConnectionPainter.hpp
+ )
 
 # If we want to give the option to build a static library,
 # set BUILD_SHARED_LIBS option to OFF
@@ -227,11 +229,11 @@ target_sources(QtNodes PRIVATE ${nodes_moc})
 ##
 
 if(BUILD_EXAMPLES)
-  add_subdirectory(examples)
+  # add_subdirectory(examples)
 endif()
 
 if(BUILD_DOCS)
-  add_subdirectory(docs)
+  # add_subdirectory(docs)
 endif()
 
 ##################
