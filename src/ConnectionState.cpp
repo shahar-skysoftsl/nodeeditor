@@ -3,16 +3,13 @@
 #include <QtCore/QDebug>
 #include <QtCore/QPointF>
 
-#include "BasicGraphicsScene.hpp"
-#include "ConnectionGraphicsObject.hpp"
-#include "NodeGraphicsObject.hpp"
+#include "AbstractQGraphicsScene.hpp"
+#include "AbstractConnectionGraphicsObject.hpp"
+#include "AbstractNodeGraphicsObject.hpp"
+
 
 namespace QtNodes {
 
-ConnectionState::~ConnectionState()
-{
-    //resetLastHoveredNode();
-}
 
 PortType ConnectionState::requiredPort() const
 {

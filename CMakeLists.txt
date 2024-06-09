@@ -26,9 +26,9 @@ option(BUILD_TESTING "Build tests" "${QT_NODES_DEVELOPER_DEFAULTS}")
 option(BUILD_EXAMPLES "Build Examples" "${QT_NODES_DEVELOPER_DEFAULTS}")
 option(BUILD_DOCS "Build Documentation" "${QT_NODES_DEVELOPER_DEFAULTS}")
 option(BUILD_SHARED_LIBS "Build as shared library" ON)
-option(BUILD_DEBUG_POSTFIX_D "Append d suffix to debug libraries" OFF)
+option(BUILD_DEBUG_POSTFIX_D "Append d suffix to debug libraries" ON)
 option(QT_NODES_FORCE_TEST_COLOR "Force colorized unit test output" OFF)
-option(USE_QT6 "Build with Qt6 (Enabled by default)" ON)
+option(USE_QT6 "Build with Qt6 (Enabled by default)" OFF)
 
 enable_testing()
 
@@ -95,7 +95,13 @@ set(CPP_SOURCE_FILES
   src/StyleCollection.cpp
   src/UndoCommands.cpp
   src/locateNode.cpp
- src/DefaultConnectionPainter.cpp)
+ src/DefaultConnectionPainter.cpp
+ 
+ src/AbstractGraphicsObject.cpp
+ "src/AbstractQGraphicsScene.cpp"
+ src/DefaultNodeGraphicsObject.cpp
+  src/GraphicsScene.cpp
+  "src/AbstractNodeGraphicsObject.cpp" "src/AbstractConnectionGraphicsObject.cpp")
 
 set(HPP_HEADER_FILES
   include/QtNodes/internal/AbstractGraphModel.hpp
@@ -135,7 +141,16 @@ set(HPP_HEADER_FILES
   src/UndoCommands.hpp
  include/QtNodes/internal/AbstractConnectionPainter.hpp 
  include/QtNodes/internal/DefaultConnectionPainter.hpp
- )
+
+ include/QtNodes/internal/AbstractGraphicsObject.hpp
+ include/QtNodes/internal/AbstractQGraphicsScene.hpp
+  include/QtNodes/internal/AbstractPainter.hpp
+ "include/QtNodes/internal/AbstractConnectionGraphicsObject.hpp"
+    include/QtNodes/internal/DefaultNodeGraphicsObject.hpp
+    include/QtNodes/internal/GraphicsScene.h
+)
+
+# include/QtNodes/internal/BasicGraphicsScene2.hpp
 
 # If we want to give the option to build a static library,
 # set BUILD_SHARED_LIBS option to OFF
@@ -229,7 +244,7 @@ target_sources(QtNodes PRIVATE ${nodes_moc})
 ##
 
 if(BUILD_EXAMPLES)
-  # add_subdirectory(examples)
+  add_subdirectory(examples)
 endif()
 
 if(BUILD_DOCS)

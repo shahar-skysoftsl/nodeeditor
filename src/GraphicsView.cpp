@@ -1,6 +1,6 @@
 #include "GraphicsView.hpp"
 
-#include "BasicGraphicsScene.hpp"
+#include "AbstractQGraphicsScene.hpp"
 #include "ConnectionGraphicsObject.hpp"
 #include "NodeGraphicsObject.hpp"
 #include "StyleCollection.hpp"
@@ -23,7 +23,7 @@
 #include <cmath>
 #include <iostream>
 
-using QtNodes::BasicGraphicsScene;
+using QtNodes::AbstractQGraphicsScene;
 using QtNodes::GraphicsView;
 
 GraphicsView::GraphicsView(QWidget *parent)
@@ -57,7 +57,7 @@ GraphicsView::GraphicsView(QWidget *parent)
     setSceneRect(-maxSize, -maxSize, (maxSize * 2), (maxSize * 2));
 }
 
-GraphicsView::GraphicsView(BasicGraphicsScene *scene, QWidget *parent)
+GraphicsView::GraphicsView(AbstractQGraphicsScene *scene, QWidget *parent)
     : GraphicsView(parent)
 {
     setScene(scene);
@@ -73,7 +73,7 @@ QAction *GraphicsView::deleteSelectionAction() const
     return _deleteSelectionAction;
 }
 
-void GraphicsView::setScene(BasicGraphicsScene *scene)
+void GraphicsView::setScene(AbstractQGraphicsScene *scene)
 {
     QGraphicsView::setScene(scene);
 
@@ -178,20 +178,38 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 }
 
 void GraphicsView::wheelEvent(QWheelEvent *event)
-{
-    QPoint delta = event->angleDelta();
+{   
 
-    if (delta.y() == 0) {
-        event->ignore();
+    QList<QGraphicsItem *> selectedItems = scene()->selectedItems();
+    if (selectedItems.isEmpty()) {
+        QPoint delta = event->angleDelta();
+
+        if (delta.y() == 0) {
+            event->ignore();
+            return;
+        }
+
+        double const d = delta.y() / std::abs(delta.y());
+
+        if (d > 0.0)
+            scaleUp();
+        else
+            scaleDown();
+
         return;
     }
 
-    double const d = delta.y() / std::abs(delta.y());
 
-    if (d > 0.0)
-        scaleUp();
-    else
-        scaleDown();
+    // find the first AbstractNodeGraphicsObject *with* widget
+    for (auto item : selectedItems) {
+        if (auto node = qgraphicsitem_cast<AbstractNodeGraphicsObject *>(item)) {
+            AbstractGraphModel &graphModel = nodeScene()->graphModel();
+            if (auto w = graphModel.nodeData(node->nodeId(), NodeRole::Widget).value<QWidget *>()) {
+                QApplication::sendEvent(w, event);
+                return;
+            }
+        }
+    }
 }
 
 double GraphicsView::getScale() const
@@ -388,9 +406,9 @@ void GraphicsView::showEvent(QShowEvent *event)
     centerScene();
 }
 
-BasicGraphicsScene *GraphicsView::nodeScene()
+AbstractQGraphicsScene* GraphicsView::nodeScene()
 {
-    return dynamic_cast<BasicGraphicsScene *>(scene());
+    return dynamic_cast<AbstractQGraphicsScene *>(scene());
 }
 
 QPointF GraphicsView::scenePastePosition()

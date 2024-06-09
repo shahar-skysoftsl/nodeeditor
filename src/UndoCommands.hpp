@@ -10,18 +10,18 @@
 
 namespace QtNodes {
 
-class BasicGraphicsScene;
+class AbstractQGraphicsScene;
 
 class CreateCommand : public QUndoCommand
 {
 public:
-    CreateCommand(BasicGraphicsScene *scene, QString const name, QPointF const &mouseScenePos);
+    CreateCommand(AbstractQGraphicsScene *scene, QString const name, QPointF const &mouseScenePos);
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
+    AbstractQGraphicsScene *_scene;
     NodeId _nodeId;
     QJsonObject _sceneJson;
 };
@@ -33,26 +33,26 @@ private:
 class DeleteCommand : public QUndoCommand
 {
 public:
-    DeleteCommand(BasicGraphicsScene *scene);
+    DeleteCommand(AbstractQGraphicsScene *scene);
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
+    AbstractQGraphicsScene *_scene;
     QJsonObject _sceneJson;
 };
 
 class CopyCommand : public QUndoCommand
 {
 public:
-    CopyCommand(BasicGraphicsScene *scene);
+    CopyCommand(AbstractQGraphicsScene *scene);
 };
 
 class PasteCommand : public QUndoCommand
 {
 public:
-    PasteCommand(BasicGraphicsScene *scene, QPointF const &mouseScenePos);
+    PasteCommand(AbstractQGraphicsScene *scene, QPointF const &mouseScenePos);
 
     void undo() override;
     void redo() override;
@@ -62,7 +62,7 @@ private:
     QJsonObject makeNewNodeIdsInScene(QJsonObject const &sceneJson);
 
 private:
-    BasicGraphicsScene *_scene;
+    AbstractQGraphicsScene *_scene;
     QPointF const &_mouseScenePos;
     QJsonObject _newSceneJson;
 };
@@ -70,13 +70,13 @@ private:
 class DisconnectCommand : public QUndoCommand
 {
 public:
-    DisconnectCommand(BasicGraphicsScene *scene, ConnectionId const);
+    DisconnectCommand(AbstractQGraphicsScene *scene, ConnectionId const);
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
+    AbstractQGraphicsScene *_scene;
 
     ConnectionId _connId;
 };
@@ -84,13 +84,13 @@ private:
 class ConnectCommand : public QUndoCommand
 {
 public:
-    ConnectCommand(BasicGraphicsScene *scene, ConnectionId const);
+    ConnectCommand(AbstractQGraphicsScene *scene, ConnectionId const);
 
     void undo() override;
     void redo() override;
 
 private:
-    BasicGraphicsScene *_scene;
+    AbstractQGraphicsScene *_scene;
 
     ConnectionId _connId;
 };
@@ -98,7 +98,7 @@ private:
 class MoveNodeCommand : public QUndoCommand
 {
 public:
-    MoveNodeCommand(BasicGraphicsScene *scene, QPointF const &diff);
+    MoveNodeCommand(AbstractQGraphicsScene *scene, QPointF const &diff);
 
     void undo() override;
     void redo() override;
@@ -115,7 +115,7 @@ public:
     bool mergeWith(QUndoCommand const *c) override;
 
 private:
-    BasicGraphicsScene *_scene;
+    AbstractQGraphicsScene *_scene;
     std::unordered_set<NodeId> _selectedNodes;
     QPointF _diff;
 };

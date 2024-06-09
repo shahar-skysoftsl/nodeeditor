@@ -7,28 +7,28 @@
 
 namespace QtNodes {
 
-class BasicGraphicsScene;
+class AbstractQGraphicsScene;
 class GraphModel;
 class NodeGeometry;
-class NodeGraphicsObject;
+class AbstractNodeGraphicsObject;
 class NodeState;
 
 /// @ Lightweight class incapsulating paint code.
 class NODE_EDITOR_PUBLIC DefaultNodePainter : public AbstractNodePainter
 {
 public:
-    void paint(QPainter *painter, NodeGraphicsObject &ngo) const override;
+    void paint(QPainter *painter, AbstractNodeGraphicsObject &ngo) const override;
 
-    void drawNodeRect(QPainter *painter, NodeGraphicsObject &ngo) const;
+    void drawNodeRect(QPainter *painter, AbstractNodeGraphicsObject &ngo) const;
 
-    void drawConnectionPoints(QPainter *painter, NodeGraphicsObject &ngo) const;
+    void drawConnectionPoints(QPainter *painter, AbstractNodeGraphicsObject &ngo) const;
 
-    void drawFilledConnectionPoints(QPainter *painter, NodeGraphicsObject &ngo) const;
+    void drawFilledConnectionPoints(QPainter *painter, AbstractNodeGraphicsObject &ngo) const;
 
-    void drawNodeCaption(QPainter *painter, NodeGraphicsObject &ngo) const;
+    void drawNodeCaption(QPainter *painter, AbstractNodeGraphicsObject &ngo) const;
 
-    void drawEntryLabels(QPainter *painter, NodeGraphicsObject &ngo) const;
+    void drawEntryLabels(QPainter *painter, AbstractNodeGraphicsObject &ngo) const;
 
-    void drawResizeRect(QPainter *painter, NodeGraphicsObject &ngo) const;
+    void drawResizeRect(QPainter *painter, AbstractNodeGraphicsObject &ngo) const;
 };
 } // namespace QtNodes

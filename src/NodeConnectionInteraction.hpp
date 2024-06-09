@@ -8,9 +8,9 @@
 
 namespace QtNodes {
 
-class ConnectionGraphicsObject;
-class NodeGraphicsObject;
-class BasicGraphicsScene;
+class AbstractConnectionGraphicsObject;
+class AbstractNodeGraphicsObject;
+class AbstractQGraphicsScene;
 
 /// Class wraps conecting and disconnecting checks.
 /**
@@ -20,9 +20,9 @@ class BasicGraphicsScene;
 class NodeConnectionInteraction
 {
 public:
-    NodeConnectionInteraction(NodeGraphicsObject &ngo,
-                              ConnectionGraphicsObject &cgo,
-                              BasicGraphicsScene &scene);
+    NodeConnectionInteraction(AbstractNodeGraphicsObject &ngo,
+                              AbstractConnectionGraphicsObject &cgo,
+                              AbstractQGraphicsScene &scene);
 
     /**
    * Can connect when following conditions are met:
@@ -58,11 +58,11 @@ private:
     PortIndex nodePortIndexUnderScenePoint(PortType portType, QPointF const &p) const;
 
 private:
-    NodeGraphicsObject &_ngo;
+    AbstractNodeGraphicsObject &_ngo;
 
-    ConnectionGraphicsObject &_cgo;
+    AbstractConnectionGraphicsObject &_cgo;
 
-    BasicGraphicsScene &_scene;
+    AbstractQGraphicsScene &_scene;
 };
 
 } // namespace QtNodes

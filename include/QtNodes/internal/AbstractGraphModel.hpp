@@ -229,10 +229,12 @@ Q_SIGNALS:
     void connectionCreated(ConnectionId const connectionId);
 
     void connectionDeleted(ConnectionId const connectionId);
+    void connectionsDeleted(QList<ConnectionId> const connections);
 
     void nodeCreated(NodeId const nodeId);
 
     void nodeDeleted(NodeId const nodeId);
+    void nodesDeleted(QList<NodeId> const nodes);
 
     void nodeUpdated(NodeId const nodeId);
 

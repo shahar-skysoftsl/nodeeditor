@@ -6,7 +6,7 @@
 
 namespace QtNodes {
 
-class BasicGraphicsScene;
+class AbstractQGraphicsScene;
 
 /**
  * @brief A central view able to render objects from `BasicGraphicsScene`.
@@ -23,7 +23,7 @@ public:
 
 public:
     GraphicsView(QWidget *parent = Q_NULLPTR);
-    GraphicsView(BasicGraphicsScene *scene, QWidget *parent = Q_NULLPTR);
+    GraphicsView(AbstractQGraphicsScene *scene, QWidget *parent = Q_NULLPTR);
 
     GraphicsView(const GraphicsView &) = delete;
     GraphicsView operator=(const GraphicsView &) = delete;
@@ -32,7 +32,7 @@ public:
 
     QAction *deleteSelectionAction() const;
 
-    void setScene(BasicGraphicsScene *scene);
+    void setScene(AbstractQGraphicsScene *scene);
 
     void centerScene();
 
@@ -79,7 +79,7 @@ protected:
     void showEvent(QShowEvent *event) override;
 
 protected:
-    BasicGraphicsScene *nodeScene();
+    AbstractQGraphicsScene *nodeScene();
 
     /// Computes scene position for pasting the copied/duplicated node groups.
     QPointF scenePastePosition();

@@ -4,18 +4,18 @@
 
 #include <QtCore/QMargins>
 
+#include "AbstractQGraphicsScene.hpp"
 #include "AbstractGraphModel.hpp"
 #include "AbstractNodeGeometry.hpp"
-#include "BasicGraphicsScene.hpp"
-#include "ConnectionGraphicsObject.hpp"
+#include "AbstractNodeGraphicsObject.hpp"
+#include "AbstractConnectionGraphicsObject.hpp"
 #include "ConnectionIdUtils.hpp"
-#include "NodeGraphicsObject.hpp"
 #include "NodeState.hpp"
 #include "StyleCollection.hpp"
 
 namespace QtNodes {
 
-void DefaultNodePainter::paint(QPainter *painter, NodeGraphicsObject &ngo) const
+void DefaultNodePainter::paint(QPainter *painter, AbstractNodeGraphicsObject &ngo) const
 {
     // TODO?
     //AbstractNodeGeometry & geometry = ngo.nodeScene()->nodeGeometry();
@@ -34,7 +34,7 @@ void DefaultNodePainter::paint(QPainter *painter, NodeGraphicsObject &ngo) const
     drawResizeRect(painter, ngo);
 }
 
-void DefaultNodePainter::drawNodeRect(QPainter *painter, NodeGraphicsObject &ngo) const
+void DefaultNodePainter::drawNodeRect(QPainter *painter, AbstractNodeGraphicsObject &ngo) const
 {
     AbstractGraphModel &model = ngo.graphModel();
 
@@ -74,7 +74,8 @@ void DefaultNodePainter::drawNodeRect(QPainter *painter, NodeGraphicsObject &ngo
     painter->drawRoundedRect(boundary, radius, radius);
 }
 
-void DefaultNodePainter::drawConnectionPoints(QPainter *painter, NodeGraphicsObject &ngo) const
+void DefaultNodePainter::drawConnectionPoints(QPainter *painter,
+                                              AbstractNodeGraphicsObject &ngo) const
 {
     AbstractGraphModel &model = ngo.graphModel();
     NodeId const nodeId = ngo.nodeId();
@@ -146,7 +147,8 @@ void DefaultNodePainter::drawConnectionPoints(QPainter *painter, NodeGraphicsObj
     }
 }
 
-void DefaultNodePainter::drawFilledConnectionPoints(QPainter *painter, NodeGraphicsObject &ngo) const
+void DefaultNodePainter::drawFilledConnectionPoints(QPainter *painter,
+                                                    AbstractNodeGraphicsObject &ngo) const
 {
     AbstractGraphModel &model = ngo.graphModel();
     NodeId const nodeId = ngo.nodeId();
@@ -190,7 +192,7 @@ void DefaultNodePainter::drawFilledConnectionPoints(QPainter *painter, NodeGraph
     }
 }
 
-void DefaultNodePainter::drawNodeCaption(QPainter *painter, NodeGraphicsObject &ngo) const
+void DefaultNodePainter::drawNodeCaption(QPainter *painter, AbstractNodeGraphicsObject &ngo) const
 {
     AbstractGraphModel &model = ngo.graphModel();
     NodeId const nodeId = ngo.nodeId();
@@ -217,7 +219,7 @@ void DefaultNodePainter::drawNodeCaption(QPainter *painter, NodeGraphicsObject &
     painter->setFont(f);
 }
 
-void DefaultNodePainter::drawEntryLabels(QPainter *painter, NodeGraphicsObject &ngo) const
+void DefaultNodePainter::drawEntryLabels(QPainter *painter, AbstractNodeGraphicsObject &ngo) const
 {
     AbstractGraphModel &model = ngo.graphModel();
     NodeId const nodeId = ngo.nodeId();
@@ -257,7 +259,7 @@ void DefaultNodePainter::drawEntryLabels(QPainter *painter, NodeGraphicsObject &
     }
 }
 
-void DefaultNodePainter::drawResizeRect(QPainter *painter, NodeGraphicsObject &ngo) const
+void DefaultNodePainter::drawResizeRect(QPainter *painter, AbstractNodeGraphicsObject &ngo) const
 {
     AbstractGraphModel &model = ngo.graphModel();
     NodeId const nodeId = ngo.nodeId();

@@ -13,9 +13,9 @@
 
 namespace QtNodes {
 
-NodeConnectionInteraction::NodeConnectionInteraction(NodeGraphicsObject &ngo,
-                                                     ConnectionGraphicsObject &cgo,
-                                                     BasicGraphicsScene &scene)
+NodeConnectionInteraction::NodeConnectionInteraction(AbstractNodeGraphicsObject &ngo,
+                                                     AbstractConnectionGraphicsObject &cgo,
+                                                     AbstractQGraphicsScene &scene)
     : _ngo(ngo)
     , _cgo(cgo)
     , _scene(scene)

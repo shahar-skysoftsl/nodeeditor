@@ -7,15 +7,13 @@
 #include "AbstractGraphModel.hpp"
 #include "AbstractNodeGeometry.hpp"
 #include "BasicGraphicsScene.hpp"
-#include "ConnectionGraphicsObject.hpp"
 #include "ConnectionIdUtils.hpp"
-#include "NodeGraphicsObject.hpp"
 #include "NodeState.hpp"
 #include "StyleCollection.hpp"
 
 namespace QtNodes {
 
-static QPainterPath cubicPath(ConnectionGraphicsObject const &connection)
+static QPainterPath cubicPath(AbstractConnectionGraphicsObject const &connection)
 {
     QPointF const &in = connection.endPoint(PortType::In);
     QPointF const &out = connection.endPoint(PortType::Out);
@@ -35,7 +33,7 @@ static QPainterPath cubicPath(ConnectionGraphicsObject const &connection)
 
 
 #ifdef NODE_DEBUG_DRAWING
-static void debugDrawing(QPainter *painter, ConnectionGraphicsObject const &cgo)
+static void debugDrawing(QPainter *painter, AbstractConnectionGraphicsObject const &cgo)
 {
     Q_UNUSED(painter);
 
@@ -66,7 +64,7 @@ static void debugDrawing(QPainter *painter, ConnectionGraphicsObject const &cgo)
 
 #endif
 
-static void drawSketchLine(QPainter *painter, ConnectionGraphicsObject const &cgo)
+static void drawSketchLine(QPainter *painter, AbstractConnectionGraphicsObject const &cgo)
 {
     ConnectionState const &state = cgo.connectionState();
 
@@ -89,7 +87,7 @@ static void drawSketchLine(QPainter *painter, ConnectionGraphicsObject const &cg
     }
 }
 
-static void drawHoveredOrSelected(QPainter *painter, ConnectionGraphicsObject const &cgo)
+static void drawHoveredOrSelected(QPainter *painter, AbstractConnectionGraphicsObject const &cgo)
 {
     bool const hovered = cgo.connectionState().hovered();
     bool const selected = cgo.isSelected();
@@ -114,7 +112,7 @@ static void drawHoveredOrSelected(QPainter *painter, ConnectionGraphicsObject co
     }
 }
 
-static void drawNormalLine(QPainter *painter, ConnectionGraphicsObject const &cgo)
+static void drawNormalLine(QPainter *painter, AbstractConnectionGraphicsObject const &cgo)
 {
     ConnectionState const &state = cgo.connectionState();
 
@@ -217,7 +215,8 @@ static void drawNormalLine(QPainter *painter, ConnectionGraphicsObject const &cg
 }
 
 
-void DefaultConnectionPainter::paint(QPainter *painter, ConnectionGraphicsObject &cgo) const {
+void DefaultConnectionPainter::paint(QPainter *painter, AbstractConnectionGraphicsObject &cgo) const
+{
     drawHoveredOrSelected(painter, cgo);
 
     drawSketchLine(painter, cgo);
@@ -241,7 +240,8 @@ void DefaultConnectionPainter::paint(QPainter *painter, ConnectionGraphicsObject
 }
 
 
-QPainterPath DefaultConnectionPainter::getPainterStroke(ConnectionGraphicsObject const &connection)
+QPainterPath DefaultConnectionPainter::getPainterStroke(
+    AbstractConnectionGraphicsObject const &connection)
 {
     auto cubic = cubicPath(connection);
 

@@ -14,39 +14,90 @@
 
 namespace QtNodes {
 
-class ConnectionGraphicsObject;
-class NodeGraphicsObject;
+class AbstractConnectionGraphicsObject;
+class AbstractNodeGraphicsObject;
 
-/// Stores bool for hovering connections and resizing flag.
 class NODE_EDITOR_PUBLIC NodeState
 {
 public:
-    NodeState(NodeGraphicsObject &ngo);
+    NodeState(AbstractNodeGraphicsObject &ngo);
 
-public:
     bool hovered() const { return _hovered; }
 
     void setHovered(bool hovered = true) { _hovered = hovered; }
 
-    void setResizing(bool resizing);
+    void setResizing(bool resizing) {  _resizing = resizing; }
 
-    bool resizing() const;
+    bool resizing() const { return _resizing; }
 
-    ConnectionGraphicsObject const *connectionForReaction() const;
+    AbstractConnectionGraphicsObject const *connectionForReaction() const;
 
-    void storeConnectionForReaction(ConnectionGraphicsObject const *cgo);
+    void storeConnectionForReaction(AbstractConnectionGraphicsObject const *cgo);
 
     void resetConnectionForReaction();
 
 private:
-    NodeGraphicsObject &_ngo;
+    AbstractNodeGraphicsObject &_ngo;
 
     bool _hovered;
 
     bool _resizing;
 
+    //AbstractConnectionGraphicsObject const *_connectionForReaction = nullptr;
+    
+    //std::shared_ptr<>
+
     // QPointer tracks the QObject inside and is automatically cleared
     // when the object is destroyed.
-    QPointer<ConnectionGraphicsObject const> _connectionForReaction;
+    QPointer<AbstractConnectionGraphicsObject const> _connectionForReaction = nullptr;
 };
+
+
+
+
+
+
+
+/// Stores bool for hovering connections and resizing flag.
+//class NODE_EDITOR_PUBLIC NodeState: public AbstractNodeState<>
+//{
+//public:
+//    NodeState(NodeGraphicsObject &ngo): AbstractNodeState<>(ngo) {};
+//
+//public:
+//    // bool hovered() const { return _hovered; }
+//
+//    // void setHovered(bool hovered = true) { _hovered = hovered; }
+//
+//    // void setResizing(bool resizing);
+//
+//    // bool resizing() const;
+//
+//    // ConnectionGraphicsObject const *connectionForReaction() const;
+//
+//    // void storeConnectionForReaction(ConnectionGraphicsObject const *cgo);
+//
+//    // void resetConnectionForReaction();
+//
+//private:
+//    // NodeGraphicsObject &_ngo;
+//
+//    // bool _hovered;
+//
+//    // bool _resizing;
+//
+//    // // QPointer tracks the QObject inside and is automatically cleared
+//    // // when the object is destroyed.
+//    // QPointer<ConnectionGraphicsObject const> _connectionForReaction;
+//};
+
+
+
+
+
+
+
+
+
+
 } // namespace QtNodes

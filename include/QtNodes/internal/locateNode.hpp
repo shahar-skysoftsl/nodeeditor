@@ -7,9 +7,9 @@ class QGraphicsScene;
 
 namespace QtNodes {
 
-class NodeGraphicsObject;
+class AbstractNodeGraphicsObject;
 
-NodeGraphicsObject *locateNodeAt(QPointF scenePoint,
+AbstractNodeGraphicsObject *locateNodeAt(QPointF scenePoint,
                                  QGraphicsScene &scene,
                                  QTransform const &viewTransform);
 

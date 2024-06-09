@@ -8,7 +8,7 @@ class QPainter;
 
 namespace QtNodes {
 
-class ConnectionGraphicsObject;
+class AbstractConnectionGraphicsObject;
 class NodeDataModel;
 
 /// Class enables custom painting.
@@ -24,8 +24,8 @@ public:
    * `NodeGraphicsObject::nodeScene()->nodeGeometry()`
    * `NodeGraphicsObject::graphModel()`
    */
-    virtual void paint(QPainter *painter, ConnectionGraphicsObject &cgo) const = 0;
+    virtual void paint(QPainter *painter, AbstractConnectionGraphicsObject &cgo) const = 0;
 
-    virtual QPainterPath getPainterStroke(ConnectionGraphicsObject const &cgo) = 0;
+    virtual QPainterPath getPainterStroke(AbstractConnectionGraphicsObject const &cgo) = 0;
 };
 } // namespace QtNodes

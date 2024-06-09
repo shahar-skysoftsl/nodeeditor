@@ -17,7 +17,7 @@
 
 namespace QtNodes {
 
-static QJsonObject serializeSelectedItems(BasicGraphicsScene *scene)
+static QJsonObject serializeSelectedItems(AbstractQGraphicsScene *scene)
 {
     QJsonObject serializedScene;
 
@@ -53,7 +53,7 @@ static QJsonObject serializeSelectedItems(BasicGraphicsScene *scene)
     return serializedScene;
 }
 
-static void insertSerializedItems(QJsonObject const &json, BasicGraphicsScene *scene)
+static void insertSerializedItems(QJsonObject const &json, AbstractQGraphicsScene *scene)
 {
     AbstractGraphModel &graphModel = scene->graphModel();
 
@@ -123,7 +123,7 @@ static QPointF computeAverageNodePosition(QJsonObject const &sceneJson)
 
 //-------------------------------------
 
-CreateCommand::CreateCommand(BasicGraphicsScene *scene,
+CreateCommand::CreateCommand(AbstractQGraphicsScene *scene,
                              QString const name,
                              QPointF const &mouseScenePos)
     : _scene(scene)
@@ -156,7 +156,7 @@ void CreateCommand::redo()
 
 //-------------------------------------
 
-DeleteCommand::DeleteCommand(BasicGraphicsScene *scene)
+DeleteCommand::DeleteCommand(AbstractQGraphicsScene *scene)
     : _scene(scene)
 {
     auto &graphModel = _scene->graphModel();
@@ -233,7 +233,7 @@ void offsetNodeGroup(QJsonObject &sceneJson, QPointF const &diff)
 
 //-------------------------------------
 
-CopyCommand::CopyCommand(BasicGraphicsScene *scene)
+CopyCommand::CopyCommand(AbstractQGraphicsScene *scene)
 {
     QJsonObject sceneJson = serializeSelectedItems(scene);
 
@@ -260,7 +260,7 @@ CopyCommand::CopyCommand(BasicGraphicsScene *scene)
 
 //-------------------------------------
 
-PasteCommand::PasteCommand(BasicGraphicsScene *scene, QPointF const &mouseScenePos)
+PasteCommand::PasteCommand(AbstractQGraphicsScene *scene, QPointF const &mouseScenePos)
     : _scene(scene)
     , _mouseScenePos(mouseScenePos)
 {
@@ -371,7 +371,7 @@ QJsonObject PasteCommand::makeNewNodeIdsInScene(QJsonObject const &sceneJson)
 
 //-------------------------------------
 
-DisconnectCommand::DisconnectCommand(BasicGraphicsScene *scene, ConnectionId const connId)
+DisconnectCommand::DisconnectCommand(AbstractQGraphicsScene *scene, ConnectionId const connId)
     : _scene(scene)
     , _connId(connId)
 {
@@ -390,7 +390,7 @@ void DisconnectCommand::redo()
 
 //------
 
-ConnectCommand::ConnectCommand(BasicGraphicsScene *scene, ConnectionId const connId)
+ConnectCommand::ConnectCommand(AbstractQGraphicsScene *scene, ConnectionId const connId)
     : _scene(scene)
     , _connId(connId)
 {
@@ -409,7 +409,7 @@ void ConnectCommand::redo()
 
 //------
 
-MoveNodeCommand::MoveNodeCommand(BasicGraphicsScene *scene, QPointF const &diff)
+MoveNodeCommand::MoveNodeCommand(AbstractQGraphicsScene *scene, QPointF const &diff)
     : _scene(scene)
     , _diff(diff)
 {

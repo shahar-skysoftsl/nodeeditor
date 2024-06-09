@@ -10,10 +10,8 @@ class QPointF;
 
 namespace QtNodes {
 
-class ConnectionGraphicsObject;
+class AbstractConnectionGraphicsObject;
 
-/// Stores currently draggind end.
-/// Remembers last hovered Node.
 class NODE_EDITOR_PUBLIC ConnectionState
 {
 public:
@@ -22,7 +20,7 @@ public:
     enum LooseEnd { Pending = 0, Connected = 1 };
 
 public:
-    ConnectionState(ConnectionGraphicsObject &cgo)
+    ConnectionState(AbstractConnectionGraphicsObject &cgo)
         : _cgo(cgo)
         , _hovered(false)
     {}
@@ -33,7 +31,7 @@ public:
     ConnectionState &operator=(ConnectionState const &) = delete;
     ConnectionState &operator=(ConnectionState &&) = delete;
 
-    ~ConnectionState();
+    ~ConnectionState() = default;
 
 public:
     PortType requiredPort() const;
@@ -42,7 +40,6 @@ public:
     bool hovered() const;
     void setHovered(bool hovered);
 
-public:
     /// Caches NodeId for further interaction.
     void setLastHoveredNode(NodeId const nodeId);
 
@@ -51,10 +48,38 @@ public:
     void resetLastHoveredNode();
 
 private:
-    ConnectionGraphicsObject &_cgo;
+    AbstractConnectionGraphicsObject &_cgo;
 
     bool _hovered;
 
     NodeId _lastHoveredNode{InvalidNodeId};
 };
+
+
+
+//class ConnectionGraphicsObject;
+//
+///// Stores currently draggind end.
+///// Remembers last hovered Node.
+//class NODE_EDITOR_PUBLIC ConnectionState : public AbstractConnectionState<ConnectionGraphicsObject>
+//{
+//public:
+//    /// Defines whether we construct a new connection
+//    /// or it is already binding two nodes.
+//    enum LooseEnd { Pending = 0, Connected = 1 };
+//
+//public:
+//    ConnectionState(AbstractConnectionGraphicsObject &cgo)
+//        : AbstractConnectionState<>(cgo)
+//    {}
+//
+//    ConnectionState(ConnectionState const &) = delete;
+//    ConnectionState(ConnectionState &&) = delete;
+//
+//    ConnectionState &operator=(ConnectionState const &) = delete;
+//    ConnectionState &operator=(ConnectionState &&) = delete;
+//
+//    ~ConnectionState() = default;
+//};
+
 } // namespace QtNodes
