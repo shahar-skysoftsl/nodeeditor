@@ -28,7 +28,6 @@ AbstractGraphicsObject::AbstractGraphicsObject(AbstractQGraphicsScene &scene, QO
 
 AbstractGraphicsObject ::~AbstractGraphicsObject()
 {
-    qDebug() << "AbstractGraphicsObject ::~AbstractGraphicsObject()";
 }
 
 

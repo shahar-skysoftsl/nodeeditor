@@ -65,10 +65,6 @@ QVariant AbstractNodeGraphicsObject::itemChange(GraphicsItemChange change, const
 void AbstractNodeGraphicsObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 
-    qDebug() << "AbstractNodeGraphicsObject::mousePressEvent";
-    //if (_nodeState.locked())
-    //return;
-
     AbstractNodeGeometry &geometry = nodeScene()->nodeGeometry();
 
     for (PortType portToCheck : {PortType::In, PortType::Out}) {

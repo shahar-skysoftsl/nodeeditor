@@ -25,7 +25,6 @@ public:
 
     GraphicsScene(AbstractGraphModel &graphModel, QObject *parent = nullptr):
        AbstractQGraphicsScene(graphModel, parent) {
-        qDebug() << "GraphicsScene";
     }
 
     GraphicsScene() = delete;

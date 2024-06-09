@@ -22,7 +22,6 @@ AbstractQGraphicsScene::AbstractQGraphicsScene(AbstractGraphModel &graphModel, Q
     , _undoStack(new QUndoStack(this))
     , _orientation(Qt::Horizontal) {
 
-    qDebug() << "AbstractQGraphicsScene";
 
     connect(&_graphModel,
             &AbstractGraphModel::connectionCreated,
